@@ -54,4 +54,30 @@ class PersonTest {
         assertEquals(address2, addressList.get(0).getValue());
     }
 
+    @Test
+    void legacy_code_makes_multiple_addresses() {
+        Person person = new Person();
+
+        final String address1 = "1 Test Ln";
+        final String address2 = "2 Test Ln";
+        final String address3 = "3 Test Ln";
+
+        List<PersonAttribute> personAttributeList = person.getPersonAttributeList();
+
+        PersonAttribute personAttribute1 = new PersonAttribute();
+        personAttribute1.setLabel(UtilityConstants.PERSON_ADDRESS_LABEL);
+        personAttribute1.setValue(address1);
+
+        PersonAttribute personAttribute2 = new PersonAttribute();
+        personAttribute2.setLabel(UtilityConstants.PERSON_ADDRESS_LABEL);
+        personAttribute2.setValue(address2);
+
+        personAttributeList.add(personAttribute1);
+        personAttributeList.add(personAttribute2);
+
+        assertThrows(IllegalStateException.class,
+                () -> person.setAddress(address3),
+                "Multiple addresses exist");
+    }
+
 }

@@ -41,8 +41,10 @@ public class Person {
             attribute.setLabel(UtilityConstants.PERSON_ADDRESS_LABEL);
             attribute.setValue(address);
             personAttributeList.add(attribute);
-        } else {
+        } else if (addressList.size() == 1) {
             addressList.get(0).setValue(address);
+        } else {
+            throw new IllegalStateException("Multiple addresses exist");
         }
     }
 }
