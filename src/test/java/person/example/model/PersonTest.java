@@ -21,4 +21,19 @@ class PersonTest {
         assertTrue(addressList.isEmpty());
     }
 
+    @Test
+    void address_set_once() {
+        Person person = new Person();
+        final String address = "123 Test Ln";
+
+        person.setAddress(address);
+
+        List<PersonAttribute> addressList = person.getPersonAttributeList().stream()
+                .filter(attr -> UtilityConstants.PERSON_ADDRESS_LABEL.equals(attr.getLabel()))
+                .collect(Collectors.toList());
+
+        assertEquals(1, addressList.size());
+        assertEquals(address, addressList.get(0).getValue());
+    }
+
 }
