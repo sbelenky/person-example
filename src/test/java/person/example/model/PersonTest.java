@@ -80,4 +80,15 @@ class PersonTest {
                 "Multiple addresses exist");
     }
 
+    @Test
+    void legacy_code_makes_attributes_null() {
+        Person person = new Person();
+
+        person.setPersonAttributeList(null);
+
+        assertThrows(IllegalStateException.class,
+                () -> person.setAddress("123 Test Ln"),
+                "Attributes are missing");
+    }
+
 }

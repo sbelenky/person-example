@@ -32,6 +32,10 @@ public class Person {
     }
 
     public void setAddress(String address) {
+        if (personAttributeList == null) {
+            throw new IllegalStateException("Attributes are missing");
+        }
+
         List<PersonAttribute> addressList = personAttributeList.stream()
                 .filter(attr -> UtilityConstants.PERSON_ADDRESS_LABEL.equals(attr.getLabel()))
                 .collect(Collectors.toList());
