@@ -4,6 +4,7 @@ import person.example.common.UtilityConstants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Legacy model class, used in huge amount of places
 public class Person {
@@ -31,9 +32,17 @@ public class Person {
     }
 
     public void setAddress(String address) {
-        PersonAttribute attribute = new PersonAttribute();
-        attribute.setLabel(UtilityConstants.PERSON_ADDRESS_LABEL);
-        attribute.setValue(address);
-        personAttributeList.add(attribute);
+        List<PersonAttribute> addressList = personAttributeList.stream()
+                .filter(attr -> UtilityConstants.PERSON_ADDRESS_LABEL.equals(attr.getLabel()))
+                .collect(Collectors.toList());
+
+        if (addressList.isEmpty()) {
+            PersonAttribute attribute = new PersonAttribute();
+            attribute.setLabel(UtilityConstants.PERSON_ADDRESS_LABEL);
+            attribute.setValue(address);
+            personAttributeList.add(attribute);
+        } else {
+            addressList.get(0).setValue(address);
+        }
     }
 }

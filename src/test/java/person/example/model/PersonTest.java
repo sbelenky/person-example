@@ -36,4 +36,22 @@ class PersonTest {
         assertEquals(address, addressList.get(0).getValue());
     }
 
+    @Test
+    void address_set_multiple_times() {
+        Person person = new Person();
+
+        final String address1 = "1 Test Ln";
+        final String address2 = "2 Test Ln";
+
+        person.setAddress(address1);
+        person.setAddress(address2);
+
+        List<PersonAttribute> addressList = person.getPersonAttributeList().stream()
+                .filter(attr -> UtilityConstants.PERSON_ADDRESS_LABEL.equals(attr.getLabel()))
+                .collect(Collectors.toList());
+
+        assertEquals(1, addressList.size());
+        assertEquals(address2, addressList.get(0).getValue());
+    }
+
 }
